@@ -11,9 +11,11 @@ public class Player : MonoBehaviour
     public Animator anim;
     public bool faceright = true;
     public GameObject bloodEffect;
-    public int maxHealth = 3;
-    public static int curHelath;
+    public float maxHealth = 100;
+    public static float curHelath;
     public GameOverScreen endGame;
+    public GameObject triggerAttack;
+    public static float dame = 100f, defense=1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,11 @@ public class Player : MonoBehaviour
         {
             grounded = false;
             r2.AddForce(Vector2.up * jumpPow);
-         
+        }
+        if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.P))
+        {
+            anim.SetTrigger("melee");
+            triggerAttack.SetActive(true);
         }
     }
     private void FixedUpdate()
@@ -73,9 +79,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.tag == "Trap")
         {
-            anim.SetBool("dead", true);
-            Instantiate(bloodEffect, transform.position, transform.rotation);
-            StartCoroutine(WaitBeforeDelay());
+            ChangeHealth(-1);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -92,9 +96,16 @@ public class Player : MonoBehaviour
         anim.gameObject.SetActive(false);
         endGame.Setup();
     }
-    public void ChangeHealth (int health)
+    public void ChangeHealth (float health)
     {
+        if (health < 0) health += defense;
+        if (health >= 0) health = -1;
         curHelath += health;
-        Debug.Log(curHelath);
+        if (curHelath <= 0)
+        {
+            anim.SetBool("dead", true);
+            Instantiate(bloodEffect, transform.position, transform.rotation);
+            StartCoroutine(WaitBeforeDelay());
+        }
     }
 }

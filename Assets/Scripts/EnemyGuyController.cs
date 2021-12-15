@@ -11,11 +11,14 @@ public class EnemyGuyController : MonoBehaviour
     private int direction = 1;
     public float changeDirectionTime = 3f;
     bool walk = true, attack = false, died = false;
-    public int maxHealth = 5;
-    int curHealth;
+    public float maxHealth = 1;
+    float curHealth;
+    public float dame, defense;
     // Start is called before the first frame update
     void Start()
     {
+        dame = 10f;
+        defense = 5f;
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         timer = changeDirectionTime;
@@ -25,6 +28,11 @@ public class EnemyGuyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (curHealth <= 0)
+        {
+            anim.SetBool("died", true);
+            StartCoroutine(WaitBeforeDelay());
+        }
         if (timer < 0)
         {
             transform.rotation *= Quaternion.Euler(0, -180f, 0);
@@ -48,5 +56,21 @@ public class EnemyGuyController : MonoBehaviour
     {
         walk = false;
         attack = true;
+    }
+    public void UnAttack()
+    {
+        walk = true;
+        attack = false;
+    }
+    public void ChangeHealth(float health)
+    {
+        if (health < 0) health += defense;
+        if (health >= 0) health = -1;
+        curHealth += health;
+    }
+    IEnumerator WaitBeforeDelay()
+    {
+        yield return new WaitForSeconds(0.7f);
+        Destroy(gameObject);
     }
 }
