@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public Animator anim;
     public bool faceright = true;
     public GameObject bloodEffect;
-    public float maxHealth = 100;
+    public float maxHealth = 30f;
     public static float curHelath;
     public GameOverScreen endGame;
     public GameObject triggerAttack;
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.tag == "Trap")
         {
-            ChangeHealth(-1);
+            ChangeHealth(-1000);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
