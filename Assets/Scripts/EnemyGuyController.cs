@@ -14,7 +14,6 @@ public class EnemyGuyController : MonoBehaviour
     public float maxHealth = 1;
     float curHealth;
     public float dame, defense;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -53,26 +52,22 @@ public class EnemyGuyController : MonoBehaviour
             rb2d.MovePosition(position);
         }
     }
-
     public void Attack ()
     {
         walk = false;
         attack = true;
     }
-
     public void UnAttack()
     {
         walk = true;
         attack = false;
     }
-
     public void ChangeHealth(float health)
     {
         if (health < 0) health += defense;
         if (health >= 0) health = -1;
         curHealth += health;
     }
-    
     IEnumerator WaitBeforeDelay()
     {
         yield return new WaitForSeconds(0.7f);

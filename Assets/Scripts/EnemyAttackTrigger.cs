@@ -10,7 +10,6 @@ public class EnemyAttackTrigger : MonoBehaviour
     float timer;
     public float WaitAttackTime;
     EnemyGuyController enemyController;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +29,6 @@ public class EnemyAttackTrigger : MonoBehaviour
             enemyController.Attack();
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -39,7 +37,6 @@ public class EnemyAttackTrigger : MonoBehaviour
             playerController = collision.GetComponent<Player>();
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")

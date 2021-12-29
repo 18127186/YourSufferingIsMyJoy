@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public GameOverScreen endGame;
     public GameObject triggerAttack;
     public static float dame = 100f, defense=1f;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +34,7 @@ public class Player : MonoBehaviour
             grounded = false;
             r2.AddForce(Vector2.up * jumpPow);
         }
-        if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.C))
+        if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.P))
         {
             anim.SetTrigger("melee");
             triggerAttack.SetActive(true);
