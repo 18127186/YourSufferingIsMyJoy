@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+
 public class Player : MonoBehaviour
 {
     public float speed = 5f, maxspeed = 1.5f, jumpPow = 300f;
@@ -14,14 +15,19 @@ public class Player : MonoBehaviour
     public float maxHealth = 30f;
     public static float curHelath;
     public GameOverScreen endGame;
+    public GameObject pauseMenu;
+    public GameObject informationMenu;
     public GameObject triggerAttack;
     public static float dame = 100f, defense=1f;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         r2 = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         curHelath = maxHealth;
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -29,17 +35,79 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("grounded", grounded);
         anim.SetBool("walk", walk);
-        if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.Space) && grounded)
-        {
-            grounded = false;
-            r2.AddForce(Vector2.up * jumpPow);
-        }
-        if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.P))
-        {
-            anim.SetTrigger("melee");
-            triggerAttack.SetActive(true);
+
+        if (Time.timeScale != 0) {
+            if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.Space) && grounded)
+            {
+                grounded = false;
+                r2.AddForce(Vector2.up * jumpPow);
+            }
+            if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.P))
+            {
+                anim.SetTrigger("melee");
+                triggerAttack.SetActive(true);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                GameManage.Instance.PauseGame();
+                informationMenu.SetActive(true);
+                PlayerInfoManage.Instance.UpdateInfo(this);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameManage.Instance.PauseGame();
+                pauseMenu.SetActive(true);
+            }
         }
     }
+
+    public float GetCurrentHealth()
+    {
+        return curHelath;
+    }
+
+    public void SetCurrentHealth(float health)
+    {
+        curHelath = health;
+    }
+
+    public float GetStrength()
+    {
+        return (dame/10);
+    }
+
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetArmor()
+    {
+        return defense;
+    }
+
+    public void StrengthUp()
+    {
+        dame += 10;
+        PlayerInfoManage.Instance.UpdateInfo(this);
+    }
+
+    public void MaxHealthUp()
+    {
+        maxHealth += 2;
+        curHelath += 2;
+        PlayerInfoManage.Instance.UpdateInfo(this);
+    }
+
+    public void ArmorUp()
+    {
+        defense += 1;
+        PlayerInfoManage.Instance.UpdateInfo(this);
+    }
+
     private void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");
@@ -63,6 +131,7 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
+
     public void Flip()
     {
         faceright = !faceright;
@@ -71,6 +140,7 @@ public class Player : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Ground")
@@ -82,6 +152,7 @@ public class Player : MonoBehaviour
             ChangeHealth(-1000);
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Coin")
@@ -90,12 +161,14 @@ public class Player : MonoBehaviour
             ScoreManager.instance.ChangeScore(1);
         }
     }
+
     IEnumerator WaitBeforeDelay()
     {
         yield return new WaitForSeconds(0.7f);
         anim.gameObject.SetActive(false);
         endGame.Setup();
     }
+    
     public void ChangeHealth (float health)
     {
         if (health < 0) health += defense;

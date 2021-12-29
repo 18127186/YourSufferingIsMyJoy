@@ -15,9 +15,9 @@ public class ScoreManager : MonoBehaviour
         if (instance == null)
             instance = this;
         text.text = score.ToString() + " / " + totalscore.ToString();
-        int currentScene = GameManager.instance.GetContinueScene();
-        if (currentScene == 0) currentScene = 1;
-        map.text = "Level " + currentScene.ToString();
+        // int currentScene = GameManager.instance.GetContinueScene();
+        // if (currentScene == 0) currentScene = 1;
+        // map.text = "Level " + currentScene.ToString();
 
     }
     public void ChangeScore(int coinValue)
