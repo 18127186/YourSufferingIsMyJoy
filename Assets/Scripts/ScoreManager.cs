@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour
 {
+    public static ScoreManager _instance;
+
+    public static ScoreManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new ScoreManager();
+            }
+
+            return _instance;
+        }
+    }
     public static ScoreManager instance;
     public Text text;
     public Text map;
@@ -12,8 +26,6 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
-            instance = this;
         text.text = score.ToString() + " / " + totalscore.ToString();
         // int currentScene = GameManager.instance.GetContinueScene();
         // if (currentScene == 0) currentScene = 1;

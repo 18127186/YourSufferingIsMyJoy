@@ -5,13 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameOverScreen : MonoBehaviour
 {
+    public GameObject player;
     public void Setup()
     {
         gameObject.SetActive(true);
     }
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Player playerController = player.GetComponent<Player>();
+        playerController.transform.position = new Vector2(0f, 2f);
+        gameObject.SetActive(false);
     }
     public void ExitGame()
     {

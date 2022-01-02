@@ -14,6 +14,7 @@ public class EnemyGuyController : MonoBehaviour
     public float maxHealth = 1;
     float curHealth;
     public float dame, defense;
+    public GameObject coin;
     // Start is called before the first frame update
     void Start()
     {
@@ -70,7 +71,9 @@ public class EnemyGuyController : MonoBehaviour
     }
     IEnumerator WaitBeforeDelay()
     {
+        int randomValue = Random.Range(0, 10);
         yield return new WaitForSeconds(0.7f);
+        if (randomValue >= 7) Instantiate(coin, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
