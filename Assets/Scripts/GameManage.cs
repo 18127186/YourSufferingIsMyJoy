@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-
+using UnityEngine.SceneManagement;
 public class GameManage
 {
     private static GameManage _instance;
@@ -45,7 +45,10 @@ public class GameManage
     {
         Time.timeScale = 1;
     }
-
+    public void ChangeScene ()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
     public void SaveJsonGame(GameObject player, int index) 
     {
         string path = Path.Combine(Application.persistentDataPath, "player" + index + ".hd");

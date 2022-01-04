@@ -16,6 +16,7 @@ public class GameOverScreen : MonoBehaviour
         Player playerController = player.GetComponent<Player>();
         playerController.transform.position = new Vector2(0f, 2f);
         gameObject.SetActive(false);
+        player.SetActive(true);
     }
     public void ExitGame()
     {

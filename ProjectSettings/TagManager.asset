@@ -8,6 +8,8 @@ TagManager:
   - Trap
   - Coin
   - enemy
+  - ChangeScene
+  - Deadline
   layers:
   - Default
   - TransparentFX

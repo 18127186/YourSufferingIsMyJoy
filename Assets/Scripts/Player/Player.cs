@@ -151,6 +151,11 @@ public class Player : MonoBehaviour
         {
             ChangeHealth(-1000);
         }
+        if (collision.gameObject.tag == "Deadline")
+        {
+            curHelath = 0;
+            ChangeHealth(0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -159,6 +164,10 @@ public class Player : MonoBehaviour
         {
             Destroy(collision.gameObject);
             ScoreManager.instance.ChangeScore(1);
+        }
+        if (collision.gameObject.tag == "ChangeScene")
+        {
+            GameManage.Instance.ChangeScene();
         }
     }
 
