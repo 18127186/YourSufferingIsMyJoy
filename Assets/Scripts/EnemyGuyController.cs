@@ -15,6 +15,8 @@ public class EnemyGuyController : MonoBehaviour
     float curHealth;
     public float dame, defense;
     public GameObject coin;
+    public GameObject meteoritePrefab;
+    public HealthbarBehavior healthbar;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,14 +26,21 @@ public class EnemyGuyController : MonoBehaviour
         anim = GetComponent<Animator>();
         timer = changeDirectionTime;
         curHealth = maxHealth;
+        healthbar.SetHealthBar(curHealth, maxHealth);
+
+        if (gameObject.tag == "boss") {
+            StartCoroutine(initMeteorite());
+        } 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        healthbar.SetHealthBar(curHealth, maxHealth);
         if (curHealth <= 0)
         {
-            anim.SetBool("died", true);
+            //anim.SetBool("died", true);
+            died =true;
             StartCoroutine(WaitBeforeDelay());
         }
         if (timer < 0)
@@ -72,8 +81,20 @@ public class EnemyGuyController : MonoBehaviour
     IEnumerator WaitBeforeDelay()
     {
         int randomValue = Random.Range(0, 10);
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.65f);
         if (randomValue >= 7) Instantiate(coin, transform.position, transform.rotation);
         Destroy(gameObject);
+    }
+
+    public IEnumerator initMeteorite() {
+        while (true) {
+            int x = Random.Range(-15, 27);
+            Vector2 pos = new Vector2(x, 1.6f);
+            GameObject meteoriteObject = Instantiate(meteoritePrefab, pos, Quaternion.identity);
+            Meteorite meteorite = meteoriteObject.GetComponent<Meteorite>();
+            meteorite.fall(300f);
+
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 }

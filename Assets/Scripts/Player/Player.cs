@@ -18,7 +18,11 @@ public class Player : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject informationMenu;
     public GameObject triggerAttack;
-    public static float dame = 100f, defense=1f;
+    Vector2 direction = Vector2.zero;
+    public GameObject bulletPrefab;
+    int bullet_quantity = 0;
+    public HealthbarBehavior healthbar;
+    public static float dame = 100f, defense=1f, shootdame = 150f;
     
 
     // Start is called before the first frame update
@@ -27,7 +31,10 @@ public class Player : MonoBehaviour
         r2 = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         curHelath = maxHealth;
+        healthbar.SetHealthBar(curHelath, maxHealth);
         Time.timeScale = 1;
+        
+        StartCoroutine(LoadBullet());
     }
 
     // Update is called once per frame
@@ -35,6 +42,7 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("grounded", grounded);
         anim.SetBool("walk", walk);
+
 
         if (Time.timeScale != 0) {
             if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.Space) && grounded)
@@ -47,7 +55,15 @@ public class Player : MonoBehaviour
                 anim.SetTrigger("melee");
                 triggerAttack.SetActive(true);
             }
-            
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                if (bullet_quantity > 0) {
+                    anim.SetTrigger("shoot");
+                    bulletPrefab.SetActive(true);
+                    StartCoroutine(Shoot());
+                }
+                
+            }
             if (Input.GetKeyDown(KeyCode.I))
             {
                 GameManage.Instance.PauseGame();
@@ -110,14 +126,19 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        healthbar.SetHealthBar(curHelath, maxHealth);
+        Debug.Log("Cur" + curHelath);
+        Debug.Log("Maxx" + maxHealth);
         float h = Input.GetAxis("Horizontal");
         if (h > 0)
         {
+            direction = Vector2.right;
             walk = true;
             gameObject.transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
         else if (h < 0)
         {
+            direction = Vector2.left;
             walk = true;
             gameObject.transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
@@ -188,6 +209,24 @@ public class Player : MonoBehaviour
             anim.SetBool("dead", true);
             Instantiate(bloodEffect, transform.position, transform.rotation);
             StartCoroutine(WaitBeforeDelay());
+        }
+    }
+
+    public IEnumerator Shoot() {
+        yield return new WaitForSeconds(0.35f);
+        GameObject bulletObject = Instantiate(bulletPrefab, r2.position + Vector2.up * 0.1f, Quaternion.identity);
+        Bullet bullet = bulletObject.GetComponent<Bullet>();
+        bullet.shoot(direction, 400);
+        bullet_quantity -= 1;
+    }
+
+    public IEnumerator LoadBullet() {
+        while (true) {
+            if (bullet_quantity < 10) {
+                bullet_quantity += 1;
+            }
+            Debug.Log(bullet_quantity);
+            yield return new WaitForSeconds(5);
         }
     }
 }

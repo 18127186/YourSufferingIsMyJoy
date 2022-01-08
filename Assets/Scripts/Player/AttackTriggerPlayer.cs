@@ -18,7 +18,7 @@ public class AttackTriggerPlayer : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.tag == "enemy")
+        if (collision.tag == "enemy" || collision.tag =="boss")
         {
             EnemyGuyController enemyController = collision.GetComponent<EnemyGuyController>();
             enemyController.ChangeHealth(-Player.dame);
