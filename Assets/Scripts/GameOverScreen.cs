@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameOverScreen : MonoBehaviour
 {
     public GameObject player;
+    public GameObject menu;
+    public GameObject guideline;
     public void Setup()
     {
         gameObject.SetActive(true);
@@ -35,5 +37,16 @@ public class GameOverScreen : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public void GuideLine()
+    {
+        guideline.SetActive(true);
+        menu.SetActive(false);
+    }
+    public void CancelGuideLine ()
+    {
+        guideline.SetActive(false);
+        menu.SetActive(true);
+
     }
 }

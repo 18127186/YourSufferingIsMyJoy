@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
@@ -23,8 +24,8 @@ public class Player : MonoBehaviour
     int bullet_quantity = 0;
     public HealthbarBehavior healthbar;
     public static float dame = 100f, defense=1f, shootdame = 150f;
-    
-
+    public Text quantity_bullet;
+    public Text delayBullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -127,8 +128,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         healthbar.SetHealthBar(curHelath, maxHealth);
-        Debug.Log("Cur" + curHelath);
-        Debug.Log("Maxx" + maxHealth);
         float h = Input.GetAxis("Horizontal");
         if (h > 0)
         {
@@ -221,12 +220,17 @@ public class Player : MonoBehaviour
     }
 
     public IEnumerator LoadBullet() {
+        float timedelay = 6f;
+        float time = timedelay;
         while (true) {
-            if (bullet_quantity < 10) {
+            if (bullet_quantity < 10 && time <= 0) {
                 bullet_quantity += 1;
+                time = timedelay;
             }
-            Debug.Log(bullet_quantity);
-            yield return new WaitForSeconds(5);
+            quantity_bullet.text = "x " + bullet_quantity;
+            yield return new WaitForSeconds(1);
+            delayBullet.text = time - 1f + "s";
+            time -= 1f;
         }
     }
 }
