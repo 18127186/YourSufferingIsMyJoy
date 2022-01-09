@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736b96cc6792d7042880192cd8416106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  player: {fileID: 1714862231}
   smoothing: 5
 --- !u!81 &474178859
 AudioListener:
@@ -6820,7 +6820,7 @@ GameObject:
   - component: {fileID: 1549027399}
   m_Layer: 5
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: TextCoin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7320,9 +7320,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1549027399}
-  map: {fileID: 0}
   score: 0
-  totalscore: 6
+  totalscoreInMap: 6
+  totalscoreInMap1: 5
+  totalscoreInMap2: 7
+  totalscoreInMap3: 6
+  coinInMap: 0
 --- !u!4 &1632247301
 Transform:
   m_ObjectHideFlags: 0
@@ -7694,6 +7697,10 @@ PrefabInstance:
     - target: {fileID: 3975150546316667769, guid: e9c92e5eaa737314dae8b420bf627671, type: 3}
       propertyPath: m_Color.r
       value: 0.21596313
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265954979832442670, guid: e9c92e5eaa737314dae8b420bf627671, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5566961051714648258, guid: e9c92e5eaa737314dae8b420bf627671, type: 3}
       propertyPath: endGame

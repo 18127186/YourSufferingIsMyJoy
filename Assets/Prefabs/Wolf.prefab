@@ -513,9 +513,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   changeDirectionTime: 3
-  maxHealth: 15
-  dame: 30
-  defense: 5
+  maxHealth: 900
+  dame: 20
+  defense: 20
   coin: {fileID: 2933038334840353968, guid: 636ac275c230b8e4c9b98db1257b2794, type: 3}
   meteoritePrefab: {fileID: 0}
   healthbar: {fileID: 712141520432993634}
@@ -537,7 +537,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &8198505459972136568
@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 1368346230087299334}
   m_Layer: 0
   m_Name: AttackTrigger
-  m_TagString: Untagged
+  m_TagString: AttackFromEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

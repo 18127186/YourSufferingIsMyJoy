@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
+    public GameObject player;
+    Transform target;
     public float smoothing;
     Vector3 offset;
-    float lowY = 10f;
+    float lowY = 30f;
     // Start is called before the first frame update
     void Start()
     {
+        target = player.transform;
         offset = transform.position - target.position;
     }
 

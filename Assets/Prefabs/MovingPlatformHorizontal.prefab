@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 346553990468844636}
   m_Layer: 0
   m_Name: ground0
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos1: {fileID: 346553990118792757}
   pos2: {fileID: 346553990537238674}
-  speed: 2
+  speed: 4
   startPos: {fileID: 346553990118792757}
 --- !u!61 &346553990468844636
 BoxCollider2D:

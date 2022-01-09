@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76df5ab59c4ae98458e5b5e69ef75dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaitAttackTime: 0.675
 --- !u!1 &5566961051714648259
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   faceright: 1
   bloodEffect: {fileID: 8015149396595940054, guid: 28d697178510e8c4796b821e14f75bed, type: 3}
-  maxHealth: 30
+  maxHealth: 1000
   endGame: {fileID: 0}
   pauseMenu: {fileID: 0}
   informationMenu: {fileID: 0}
@@ -366,6 +367,7 @@ MonoBehaviour:
   healthbar: {fileID: 8392742215881072783}
   quantity_bullet: {fileID: 0}
   delayBullet: {fileID: 0}
+  needCollectCoin: {fileID: 0}
 --- !u!82 &5265954979832442670
 AudioSource:
   m_ObjectHideFlags: 0

@@ -20,13 +20,15 @@ public class EnemyAttackTrigger : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        timer -= Time.deltaTime;
-        if (attack && timer <= 0)
-        {
-            timer = WaitAttackTime;
+        if (attack) { 
+            timer -= Time.deltaTime;
+            if ( timer <= 0)
+            {
+                timer = WaitAttackTime;
            
-            playerController.ChangeHealth(-enemyController.dame);
-            enemyController.Attack();
+                playerController.ChangeHealth(-enemyController.dame);
+                enemyController.Attack();
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,6 +43,7 @@ public class EnemyAttackTrigger : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            timer = WaitAttackTime;
             attack = false;
             enemyController.UnAttack();
         }

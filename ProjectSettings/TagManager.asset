@@ -11,6 +11,8 @@ TagManager:
   - ChangeScene
   - Deadline
   - boss
+  - TextCoin
+  - AttackFromEnemy
   layers:
   - Default
   - TransparentFX

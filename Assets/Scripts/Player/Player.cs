@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public static float dame = 100f, defense=1f, shootdame = 150f;
     public Text quantity_bullet;
     public Text delayBullet;
+
+    public GameObject needCollectCoin;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,10 +36,8 @@ public class Player : MonoBehaviour
         curHelath = maxHealth;
         healthbar.SetHealthBar(curHelath, maxHealth);
         Time.timeScale = 1;
-        
-        StartCoroutine(LoadBullet());
+        LoadIEBullet();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -55,6 +55,10 @@ public class Player : MonoBehaviour
             {
                 anim.SetTrigger("melee");
                 triggerAttack.SetActive(true);
+            }
+            if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyUp(KeyCode.P))
+            {
+                triggerAttack.SetActive(false);
             }
             if (Input.GetKeyDown(KeyCode.O))
             {
@@ -169,7 +173,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.tag == "Trap")
         {
-            ChangeHealth(-1000);
+            ChangeHealth(-2000);
         }
         if (collision.gameObject.tag == "Deadline")
         {
@@ -183,11 +187,20 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Coin")
         {
             Destroy(collision.gameObject);
-            ScoreManager.instance.ChangeScore(1);
+            ScoreManager.Instance.ChangeScore(1);
         }
         if (collision.gameObject.tag == "ChangeScene")
         {
-            GameManage.Instance.ChangeScene();
+            if (ScoreManager.Instance.coinInMap < ScoreManager.Instance.totalscoreInMap)
+            {
+                needCollectCoin.SetActive(true);
+            } else
+            {
+                GameManage.Instance.ChangeScene();
+                ScoreManager.Instance.coinInMap = 0;
+
+
+            }
         }
     }
 
@@ -232,5 +245,11 @@ public class Player : MonoBehaviour
             delayBullet.text = time - 1f + "s";
             time -= 1f;
         }
+    }
+
+    public void LoadIEBullet()
+    {
+
+        StartCoroutine(LoadBullet());
     }
 }

@@ -15,11 +15,11 @@ public class GameManage
     {
         get
         {
-            if (_instance == null) 
+            if (_instance == null)
             {
                 _instance = new GameManage();
             }
-            
+
             return _instance;
         }
     }

@@ -17,6 +17,7 @@ public class EnemyGuyController : MonoBehaviour
     public GameObject coin;
     public GameObject meteoritePrefab;
     public HealthbarBehavior healthbar;
+    public GameObject winGame;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +43,11 @@ public class EnemyGuyController : MonoBehaviour
             //anim.SetBool("died", true);
             died =true;
             StartCoroutine(WaitBeforeDelay());
+            if (gameObject.tag == "boss")
+            {
+                winGame.SetActive(true);
+                Time.timeScale = 0;
+            }
         }
         if (timer < 0)
         {

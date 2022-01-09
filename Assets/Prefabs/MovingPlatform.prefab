@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9134077031370457057}
   m_Layer: 0
   m_Name: MovingPlatform
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_LocalPosition: {x: 84.47162, y: 2.3305366, z: -0.2909921}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5972623692492148313}
+  - {fileID: 6911598251476039693}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,8 +88,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4020461a94b930c49a60241e972695e8, type: 3}
---- !u!4 &5972623692492148313 stripped
+--- !u!4 &6911598251476039693 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 6770878045872628644, guid: 4020461a94b930c49a60241e972695e8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5836407636816926192, guid: 4020461a94b930c49a60241e972695e8, type: 3}
   m_PrefabInstance: {fileID: 1087047766458838525}
   m_PrefabAsset: {fileID: 0}

@@ -217,5 +217,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos1: {fileID: 7251316812964439131}
   pos2: {fileID: 6102704072377527604}
-  speed: 2
+  speed: 4
   startPos: {fileID: 7251316812964439131}

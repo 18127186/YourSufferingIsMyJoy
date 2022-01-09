@@ -19,6 +19,8 @@ public class GameOverScreen : MonoBehaviour
         playerController.transform.position = new Vector2(0f, 2f);
         gameObject.SetActive(false);
         player.SetActive(true);
+        playerController.SetCurrentHealth(playerController.GetMaxHealth());
+        playerController.LoadIEBullet();
     }
     public void ExitGame()
     {
