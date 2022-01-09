@@ -8,6 +8,7 @@ public class GameOverScreen : MonoBehaviour
     public GameObject player;
     public GameObject menu;
     public GameObject guideline;
+
     public void Setup()
     {
         gameObject.SetActive(true);
@@ -26,16 +27,21 @@ public class GameOverScreen : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
     public void ContinueGame()
     {
         int currentScene = GameManager.instance.GetContinueScene();
         SceneManager.LoadScene(currentScene);
     }
+
     public void NewGame()
     {
         GameManager.instance.SetContinueScene(1);
         SceneManager.LoadScene(1);
+        ScoreManager.Instance.score = 0;
+        ScoreManager.Instance.coinInMap = 0;
     }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -50,5 +56,12 @@ public class GameOverScreen : MonoBehaviour
         guideline.SetActive(false);
         menu.SetActive(true);
 
+    }
+
+    public void LoadGame(int index)
+    {
+        GameManage.Instance.LoadJsonGame();
+        GameManage.Instance.isLoadGame = true;
+        GameManage.Instance.fileNumber = index;
     }
 }

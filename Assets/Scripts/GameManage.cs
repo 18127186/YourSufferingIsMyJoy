@@ -4,12 +4,14 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.SceneManagement;
+
 public class GameManage
 {
     private static GameManage _instance;
 
-    public bool isNewGame = true; 
-    public bool isBinaryOpton = true; 
+    public bool isLoadGame = false; 
+    public int fileNumber; 
+    public SaveData saveData;
 
     public static GameManage Instance
     {
@@ -38,25 +40,40 @@ public class GameManage
     public void PauseGame()
     {
         Time.timeScale = 0;
-        Debug.Log("Pause");
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
     }
+
     public void ChangeScene ()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     public void SaveJsonGame(GameObject player, int index) 
     {
         string path = Path.Combine(Application.persistentDataPath, "player" + index + ".hd");
 
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        int playerScore = ScoreManager.Instance.score;
+
         Player playerController = player.GetComponent<Player>();
-        float playerHealth = playerController.GetCurrentHealth();
         Vector2 playerPosition = playerController.transform.position;
-        SaveData saveData = new SaveData(playerHealth, playerPosition);
+        float playerHealth = playerController.GetCurrentHealth();
+        float playerMaxHealth = playerController.GetMaxHealth();
+        float playerStrength = playerController.GetStrength();
+        float playerArmor = playerController.GetArmor();
+
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+        Vector2[] coinsPosition = new Vector2[coins.Length];
+        for (int i = 0; i < coins.Length; i++)
+        {
+            coinsPosition[i] = coins[i].transform.position;
+        }
+
+        SaveData saveData = new SaveData(scene, playerScore, playerPosition, playerHealth, playerMaxHealth, playerStrength, playerArmor, coinsPosition.Length, coinsPosition);
 
         string jsonString = JsonUtility.ToJson(saveData);
         File.WriteAllText(path, jsonString);
@@ -64,19 +81,18 @@ public class GameManage
         Debug.Log("Json saved " + path);
     }
 
-    public void LoadJsonGame(Player playerController, int index)
+    public void LoadJsonGame()
     {
-        string path = Path.Combine(Application.persistentDataPath, "player" + index + ".hd");
+        string path = Path.Combine(Application.persistentDataPath, "player" + fileNumber + ".hd");
 
         if (File.Exists(path))
         {
             string fileContents = File.ReadAllText(path);
 
-            SaveData saveData = JsonUtility.FromJson<SaveData>(fileContents);
-            playerController.SetCurrentHealth(saveData.playerHealth);
-            playerController.transform.position = new Vector2(saveData.playerPosition[0], saveData.playerPosition[1]);
+            saveData = JsonUtility.FromJson<SaveData>(fileContents);
 
-            Debug.Log("Json file loaded");
+            SceneManager.LoadScene(saveData.scene);
         }
+
     }
 }

@@ -6,7 +6,7 @@ public class EnemyGuyController : MonoBehaviour
 {
     public float speed = 2f;
     Rigidbody2D rb2d;
-    float timer;
+    public float timer;
     Animator anim;
     private int direction = 1;
     public float changeDirectionTime = 3f;
@@ -101,6 +101,21 @@ public class EnemyGuyController : MonoBehaviour
             meteorite.fall(300f);
 
             yield return new WaitForSeconds(1.0f);
+        }
+    }
+
+    public void ChangeDirectionWhenColision(Player playerController) {
+        if (playerController != null) {
+            Vector2 playerPosition = playerController.transform.position;
+            Vector2 enemyGuyPosition = transform.position;
+
+            if (playerPosition.x < enemyGuyPosition.x && direction == 1) {
+                transform.rotation *= Quaternion.Euler(0, -180f, 0);
+                direction = -1;
+            } else if (playerPosition.x > enemyGuyPosition.x && direction != 1) {
+                transform.rotation *= Quaternion.Euler(0, -180f, 0);
+                direction = 1;
+            }
         }
     }
 }

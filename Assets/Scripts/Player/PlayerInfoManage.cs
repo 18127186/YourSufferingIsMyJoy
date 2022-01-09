@@ -20,6 +20,7 @@ public class PlayerInfoManage : MonoBehaviour
         }
     }
 
+    TextMeshProUGUI scoreValue;
     TextMeshProUGUI strengthValue;
     TextMeshProUGUI healthValue;
     TextMeshProUGUI armorValue;
@@ -33,11 +34,12 @@ public class PlayerInfoManage : MonoBehaviour
     public void UpdateInfo(Player playerController)
     {
         player = playerController;
+        scoreValue = GameObject.Find("ScoreValue").GetComponent<TextMeshProUGUI>();
         strengthValue = GameObject.Find("StrValue").GetComponent<TextMeshProUGUI>();
         healthValue = GameObject.Find("HealthValue").GetComponent<TextMeshProUGUI>();
         armorValue = GameObject.Find("ArmorValue").GetComponent<TextMeshProUGUI>();
 
-        // scoreText.text = ScoreManager.instance.score.ToString();
+        scoreValue.text = ScoreManager.Instance.score.ToString();
         strengthValue.text = playerController.GetStrength().ToString(); 
         healthValue.text = playerController.GetCurrentHealth().ToString() + "/" + playerController.GetMaxHealth().ToString();
         armorValue.text = playerController.GetArmor().ToString();

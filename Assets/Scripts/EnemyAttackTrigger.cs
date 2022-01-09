@@ -22,6 +22,9 @@ public class EnemyAttackTrigger : MonoBehaviour
     {
         if (attack) { 
             timer -= Time.deltaTime;
+
+            enemyController.ChangeDirectionWhenColision(playerController);
+
             if ( timer <= 0)
             {
                 timer = WaitAttackTime;
@@ -46,6 +49,7 @@ public class EnemyAttackTrigger : MonoBehaviour
             timer = WaitAttackTime;
             attack = false;
             enemyController.UnAttack();
+            playerController = null;
         }
     }
 }

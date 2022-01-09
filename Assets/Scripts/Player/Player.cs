@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -18,15 +19,19 @@ public class Player : MonoBehaviour
     public GameOverScreen endGame;
     public GameObject pauseMenu;
     public GameObject informationMenu;
+    public GameObject pauseBtn;
+    public GameObject infoBtn;
+    public GameObject skillUI;
     public GameObject triggerAttack;
+    public GameObject coinObj;
     Vector2 direction = Vector2.zero;
     public GameObject bulletPrefab;
     int bullet_quantity = 0;
     public HealthbarBehavior healthbar;
-    public static float dame = 100f, defense=1f, shootdame = 150f;
+    public static float dame = 100f, defense=1f, shootdame=150;
     public Text quantity_bullet;
     public Text delayBullet;
-
+   
     public GameObject needCollectCoin;
     // Start is called before the first frame update
     void Start()
@@ -37,13 +42,49 @@ public class Player : MonoBehaviour
         healthbar.SetHealthBar(curHelath, maxHealth);
         Time.timeScale = 1;
         LoadIEBullet();
+
+        if (GameManage.Instance.isLoadGame)
+        {   
+            SaveData saveData = GameManage.Instance.saveData;
+
+            if (saveData != null) {
+                curHelath = saveData.playerHealth;
+                maxHealth = saveData.playerMaxHealth;
+                dame = saveData.playerStrength*10;
+                shootdame = 150 + (saveData.playerStrength*10 - 100)* 20;
+                defense = saveData.playerArmor;
+
+                healthbar.SetHealthBar(curHelath, maxHealth);
+
+                transform.position = new Vector3(saveData.playerPosition[0], saveData.playerPosition[1]);
+
+                GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+                for (int i = coins.Length; i > 0; i--) {
+                    Destroy(coins[i - 1]);
+                }
+
+                for (int i = 0; i < saveData.numCoin; i++) {
+                    Vector3 coinPosition = new Vector3(saveData.coinsXPosition[i], saveData.coinsYPosition[i], 0);
+                    Instantiate(coinObj, coinPosition, Quaternion.identity);
+                }
+
+                ScoreManager.Instance.score = saveData.playerScore;
+                ScoreManager.Instance.coinInMap = ScoreManager.Instance.totalscoreInMap - saveData.numCoin;
+
+      
+
+                ScoreManager.Instance.ChangeScore(0);
+
+                GameManage.Instance.isLoadGame = false;
+            }
+        }
     }
+
     // Update is called once per frame
     void Update()
     {
         anim.SetBool("grounded", grounded);
         anim.SetBool("walk", walk);
-
 
         if (Time.timeScale != 0) {
             if (/*CrossPlatformInputManager.GetButtonDown("Jump")*/ Input.GetKeyDown(KeyCode.Space) && grounded)
@@ -71,15 +112,12 @@ public class Player : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.I))
             {
-                GameManage.Instance.PauseGame();
-                informationMenu.SetActive(true);
-                PlayerInfoManage.Instance.UpdateInfo(this);
+                Info();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                GameManage.Instance.PauseGame();
-                pauseMenu.SetActive(true);
+                Pause();
             }
         }
     }
@@ -112,21 +150,32 @@ public class Player : MonoBehaviour
 
     public void StrengthUp()
     {
-        dame += 10;
-        PlayerInfoManage.Instance.UpdateInfo(this);
+        if (ScoreManager.Instance.score > 0) {
+            dame += 10;
+            shootdame += 20;
+            ScoreManager.Instance.ChangePlayerScore(-1);
+            PlayerInfoManage.Instance.UpdateInfo(this);
+        }
     }
 
     public void MaxHealthUp()
     {
-        maxHealth += 2;
-        curHelath += 2;
-        PlayerInfoManage.Instance.UpdateInfo(this);
+        if (ScoreManager.Instance.score > 0) {
+            maxHealth += 5;
+            curHelath += 5;
+            healthbar.SetHealthBar(curHelath, maxHealth);
+            ScoreManager.Instance.ChangePlayerScore(-1);
+            PlayerInfoManage.Instance.UpdateInfo(this);
+        }
     }
 
     public void ArmorUp()
     {
-        defense += 1;
-        PlayerInfoManage.Instance.UpdateInfo(this);
+        if (ScoreManager.Instance.score > 0) {
+            defense += 1;
+            ScoreManager.Instance.ChangePlayerScore(-1);
+            PlayerInfoManage.Instance.UpdateInfo(this);
+        }
     }
 
     private void FixedUpdate()
@@ -194,14 +243,19 @@ public class Player : MonoBehaviour
             if (ScoreManager.Instance.coinInMap < ScoreManager.Instance.totalscoreInMap)
             {
                 needCollectCoin.SetActive(true);
+                StartCoroutine(TurnFLagOff());
             } else
             {
                 GameManage.Instance.ChangeScene();
                 ScoreManager.Instance.coinInMap = 0;
-
-
             }
         }
+    }
+
+    IEnumerator TurnFLagOff()
+    {
+        yield return new WaitForSeconds(2f);
+        needCollectCoin.SetActive(false);
     }
 
     IEnumerator WaitBeforeDelay()
@@ -229,7 +283,9 @@ public class Player : MonoBehaviour
         GameObject bulletObject = Instantiate(bulletPrefab, r2.position + Vector2.up * 0.1f, Quaternion.identity);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.shoot(direction, 400);
-        bullet_quantity -= 1;
+        if (bullet_quantity > 0) {
+            bullet_quantity -= 1;
+        }
     }
 
     public IEnumerator LoadBullet() {
@@ -251,5 +307,22 @@ public class Player : MonoBehaviour
     {
 
         StartCoroutine(LoadBullet());
+    }
+
+    public void Pause() {
+        GameManage.Instance.PauseGame();
+        pauseMenu.SetActive(true);
+        pauseBtn.SetActive(false);
+        infoBtn.SetActive(false);
+        skillUI.SetActive(false);
+    }
+
+    public void Info() {
+        GameManage.Instance.PauseGame();
+        informationMenu.SetActive(true);
+        pauseBtn.SetActive(false);
+        infoBtn.SetActive(false);
+        skillUI.SetActive(false);
+        PlayerInfoManage.Instance.UpdateInfo(this);
     }
 }

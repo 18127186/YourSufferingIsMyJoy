@@ -490,7 +490,7 @@ Animator:
   m_GameObject: {fileID: 8198505459972136580}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1246a291c69361743bf93161e451a562, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0b05dcbd80f100a4e8019ae69e4c3910, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -512,6 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  timer: 0
   changeDirectionTime: 3
   maxHealth: 900
   dame: 20
@@ -519,6 +520,7 @@ MonoBehaviour:
   coin: {fileID: 2933038334840353968, guid: 636ac275c230b8e4c9b98db1257b2794, type: 3}
   meteoritePrefab: {fileID: 0}
   healthbar: {fileID: 712141520432993634}
+  winGame: {fileID: 0}
 --- !u!50 &8198505459972136569
 Rigidbody2D:
   serializedVersion: 4
@@ -608,10 +610,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.0513897, y: -1.5925267}
+  m_Offset: {x: 0.3188504, y: -1.5925267}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -622,7 +624,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6478014, y: 1.4858565}
+  m_Size: {x: 4.6178665, y: 1.4858565}
   m_EdgeRadius: 0
 --- !u!114 &1368346230087299334
 MonoBehaviour:
@@ -637,4 +639,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyGuy: {fileID: 8198505459972136580}
-  WaitAttackTime: 0.5
+  WaitAttackTime: 0.2

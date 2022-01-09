@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  timer: 0
   changeDirectionTime: 2
   maxHealth: 100
   dame: 20
@@ -163,6 +164,7 @@ MonoBehaviour:
   coin: {fileID: 2933038334840353968, guid: 636ac275c230b8e4c9b98db1257b2794, type: 3}
   meteoritePrefab: {fileID: 0}
   healthbar: {fileID: 1526282843358297605}
+  winGame: {fileID: 0}
 --- !u!61 &3065425676413190269
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -611,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyGuy: {fileID: 1124884747043612965}
-  WaitAttackTime: 0.5
+  WaitAttackTime: 0.15
 --- !u!61 &1772973441508928966
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -625,7 +627,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.2543011, y: -0.37129498}
+  m_Offset: {x: -0.29446173, y: -0.91614723}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -636,5 +638,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8996582, y: 4.960476}
+  m_Size: {x: 5.7209415, y: 6.0501804}
   m_EdgeRadius: 0

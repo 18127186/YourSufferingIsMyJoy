@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class PauseMenuController : MonoBehaviour
 {
     public GameObject player;
+    public GameObject pauseBtn;
+    public GameObject infoBtn;
+    public GameObject skillUI;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,9 @@ public class PauseMenuController : MonoBehaviour
     {
         GameManage.Instance.ResumeGame();
         this.gameObject.SetActive(false);
+        pauseBtn.SetActive(true);
+        infoBtn.SetActive(true);
+        skillUI.SetActive(true);
     }
 
     public void SaveGame(int index)

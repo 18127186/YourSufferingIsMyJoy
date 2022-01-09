@@ -351,18 +351,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   maxspeed: 1.5
-  jumpPow: 300
+  jumpPow: 320
   grounded: 1
   walk: 0
   r2: {fileID: 0}
   anim: {fileID: 0}
   faceright: 1
   bloodEffect: {fileID: 8015149396595940054, guid: 28d697178510e8c4796b821e14f75bed, type: 3}
-  maxHealth: 1000
+  maxHealth: 150
   endGame: {fileID: 0}
   pauseMenu: {fileID: 0}
   informationMenu: {fileID: 0}
+  pauseBtn: {fileID: 0}
+  infoBtn: {fileID: 0}
+  skillUI: {fileID: 0}
   triggerAttack: {fileID: 5566961050274764064}
+  coinObj: {fileID: 2933038334840353968, guid: 636ac275c230b8e4c9b98db1257b2794, type: 3}
   bulletPrefab: {fileID: 7208922867618471405, guid: fbb8db5b99f9dee49a96e9c6f67cf921, type: 3}
   healthbar: {fileID: 8392742215881072783}
   quantity_bullet: {fileID: 0}
